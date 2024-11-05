@@ -71,7 +71,7 @@ output application/xml
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="4b47b4fb-a101-4888-a594-efcc84488701" message="#[payload]"/>
 		<try doc:name="Try" doc:id="b7506547-a595-4052-9d4f-af33f1df9bd3" >
-			<wsc:consume doc:name="Consume" doc:id="b4401ced-a45f-4267-807b-f7629ef37def" config-ref="Web_Service_Consumer_Config" operation="createAdressbookCustomer">
+			<wsc:consume doc:name="Consume" doc:id="b4401ced-a45f-4267-807b-f7629ef37def" config-ref="Web_Service_Consumer_Config" operation="createAdressbookCustomer" targetValue="#[payload.body]">
 		</wsc:consume>
 			<error-handler >
 				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="3e780918-b47b-467b-b7b8-75b69e202200" type="ANY">
@@ -84,15 +84,57 @@ error.exception.cause.cause.messageString]]></ee:set-payload>
 						</ee:message>
 					</ee:transform>
 					<logger level="INFO" doc:name="Logger" doc:id="784f0f24-791d-483a-ba18-196fba246af4" message="#[payload]"/>
+					<ee:transform doc:name="Transform Message" doc:id="c359fd16-ee60-40ea-8cb4-91f06ffc4e49" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns soapenv http://schemas.xmlsoap.org/soap/envelope/
+ns sforce http://soap.sforce.com/2005/09/outbound
+
+---
+{
+  'soapenv:Envelope' @('xmlns:soapenv': "http://schemas.xmlsoap.org/soap/envelope/"): {
+    'soapenv:Body': {
+      'notificationsResponse' @('xmlns': "http://soap.sforce.com/2005/09/outbound"): {
+        Ack: "false"
+      }
+    }
+  }
+}
+]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
 				</on-error-propagate>
 			</error-handler>
 		</try>
+		<ee:transform doc:name="Transform Message" doc:id="27d54bef-f79b-4a3c-b594-5cecb498ec8b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[output application/json
+---
+payload.body]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 		<ee:transform doc:name="Transform Message" doc:id="491f0557-97f1-460e-97d7-749fb490c86e" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/xml
+ns soapenv http://schemas.xmlsoap.org/soap/envelope/
+ns sforce http://soap.sforce.com/2005/09/outbound
+
+var outMessage = payload.createAdressbookCustomerResponse.outMessage
+var ackValue = if (outMessage == "Success") "true" else "false"
+
 ---
-payload]]></ee:set-payload>
+{
+  'soapenv:Envelope' @('xmlns:soapenv': "http://schemas.xmlsoap.org/soap/envelope/"): {
+    'soapenv:Body': {
+      'notificationsResponse' @('xmlns': "http://soap.sforce.com/2005/09/outbound"): {
+        Ack: ackValue
+      }
+    }
+  }
+}
+]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="31de3cbd-1c69-4eaa-bf41-75c0fa4ba7b3" message="========== accounts sync flow ended ============"/>
