@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
+	<http:listener-config
+		name="ntn-jde-sync-sapi-httpListenerConfig">
+		<http:listener-connection
+			host="${https.host}" port="${https.port}" />
+	</http:listener-config>
+	<configuration-properties
+		doc:name="Configuration properties"
+		doc:id="11d8256d-60a5-4180-b994-71c0e0666255"
+		file="properties\config-${mule.env}.yaml" />
+	<secure-properties:config
+		name="Secure_Properties_Config" doc:name="Secure Properties Config"
+		doc:id="1df8b51c-46e6-48ad-bac6-4488e2d3807c"
+		file="properties\config-secure-${mule.env}.yaml" key="${secure.key}">
+		<secure-properties:encrypt
+			algorithm="Blowfish" />
+	</secure-properties:config>
+	<global-property doc:name="Global Property"
+		doc:id="7fbd6086-9c2c-4f30-a4cf-9eb92359cccf" name="mule.env"
+		value="${mule.env}" />
+	<global-property doc:name="Global Property"
+		doc:id="a518bfdd-6532-4935-acc8-2f3d52aafbe2" name="secure.key"
+		value="secure12345" />
+	<configuration-properties
+		doc:name="Configuration properties"
+		doc:id="50e1994d-65ee-4999-bf22-2d12489402fb"
+		file="properties\config-common.yaml" />
+	<configuration-properties
+		doc:name="Configuration properties"
+		doc:id="f9248cd3-4e16-4a5a-bf14-ec71abbf48a0"
+		file="properties\config-secure-${mule.env}.yaml" />
+	<!-- <wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service 
+		Consumer Config" doc:id="b240b488-86a1-4936-ba43-7cca9f915bc9" > <wsc:connection 
+		wsdlLocation="https://ntnpy.opc.oracleoutsourcing.com/PY920/SalesForceProcessManager?wsdl" 
+		service="SalesForceProcessManagerService" port="SalesForceProcessManagerPort" 
+		address="https://ntnpy.opc.oracleoutsourcing.com:443/PY920/SalesForceProcessManager" 
+		> <wsc:custom-transport-configuration > <wsc:default-http-transport-configuration 
+		timeout="60000" /> </wsc:custom-transport-configuration> <wsc:web-service-security 
+		mustUnderstand="false" securityHeadersOrder="TimestampAtEnd"> <wsc:username-token-security-strategy 
+		password="SERVICE" addNonce="true" addCreated="true" username="BIZSERVICE"/> 
+		</wsc:web-service-security> </wsc:connection> </wsc:config> -->
+	<wsc:config name="Web_Service_Consumer_Config"
+		doc:name="Web Service Consumer Config"
+		doc:id="e274648a-7309-411e-ac79-59d37192b614">
+		<wsc:connection
+			wsdlLocation="https://ntnpy.opc.oracleoutsourcing.com/PY920/SalesForceProcessManager?wsdl"
+			service="SalesForceProcessManagerService"
+			port="SalesForceProcessManagerPort"
+			address="https://ntnpy.opc.oracleoutsourcing.com:443/PY920/SalesForceProcessManager">
+			<wsc:custom-transport-configuration>
+				<wsc:default-http-transport-configuration
+					timeout="60000" />
+			</wsc:custom-transport-configuration>
+			<wsc:web-service-security
+				mustUnderstand="false" securityHeadersOrder="TimestampAtEnd">
+				<wsc:username-token-security-strategy
+					username="BIZSERVICE" password="SERVICE" addNonce="true"
+					addCreated="true" />
+			</wsc:web-service-security>
+		</wsc:connection>
+	</wsc:config>
+</mule>

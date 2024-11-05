@@ -1,0 +1,37 @@
+%dw 2.0
+
+type auto_575cfb1a_a71e_4800_8333_3983b4dd04e8_Input_Payload = {
+  "CTY1 "?: String, 
+  "sessionID "?: String, 
+  "AN81 "?: Number, 
+  "ANS "?: String, 
+  "AC08 "?: String, 
+  "AC36 "?: String, 
+  "AC06 "?: String, 
+  "AC10 "?: String, 
+  "AC12 "?: String, 
+  "AC24 "?: String, 
+  "AC02 "?: String, 
+  "PAR1 "?: String, 
+  "AT1 "?: String, 
+  "ADD2 "?: String, 
+  "ADDS "?: String, 
+  "ADD4 "?: String, 
+  "CPGP "?: String, 
+  "CTR "?: String, 
+  "PH1 "?: String, 
+  "ADD1 "?: String, 
+  "AC03 "?: String, 
+  "ALPH "?: String, 
+  "AC05 "?: String, 
+  "DUNS "?: String, 
+  "AC33 "?: String, 
+  "AC01 "?: String, 
+  "BADT "?: String, 
+  "ADDZ "?: String, 
+  "SIC "?: String, 
+  "PA8 "?: String, 
+  "ADD3 "?: String, 
+  _?: Any
+}
+

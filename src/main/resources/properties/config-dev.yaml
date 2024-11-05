@@ -1,0 +1,50 @@
+# Listener configuration
+https:
+  host: "0.0.0.0"
+  port: "8081"
+  path: "/api/v1/*"
+
+# API specification
+api:
+  #Replace with respective autodiscovery id
+  autodiscoveryID: ""
+  
+#DB config details
+db:
+  host: "129.147.16.140"
+  port: "1521"
+  user: "c_mulesoft"
+  serviceName: "jdorcldv.netjiuwoz.vcnzgqox.oraclevcn.com"
+  
+#ntn-accounts-sync-papi Listener configuration
+proc-request:
+  https:
+    accounts-method: "POST"
+    protocol: "http"
+    host: "0.0.0.0"
+    port: "8082"
+    accounts: "/api/jde/accounts"
+
+#ntn-accounts-sync-papi client details
+ntn:
+  proc:
+    clientId: "" 
+    
+#ntn web service details
+wsdl:
+  path : "wsdl/Accounts.wsdl"
+  service : "SalesForceProcessManagerService"
+  port : "SalesForceProcessManagerPort"
+  address : "https://ntnpy.opc.oracleoutsourcing.com/PY920/SalesForceProcessManager"
+  username : "BIZSERVICE"
+  
+#Request Timeout config
+http-request:
+  timeout: "6000000"  
+
+#app name
+application:
+  name: ""    
+  
+  
+

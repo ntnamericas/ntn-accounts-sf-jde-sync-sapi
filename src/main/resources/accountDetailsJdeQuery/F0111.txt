@@ -1,0 +1,1 @@
+select WWAN8,WWIDLN from testdta.F0111

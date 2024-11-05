@@ -1,0 +1,1 @@
+Select WPAR1, WPPH1,WPAN8, WPPHTP from testdta.F0115

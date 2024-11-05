@@ -1,0 +1,1 @@
+select DRDL01,DRDL02,DRSY,DRRT,DRKY from TESTCTL.F0005 Where DRSY in('01','40','77','H42','42','00') and DRRT in ('ST','06','01','08','AS','03' ,'10','12','08','02','04','SC','CN','BA','CR','PC','DB','HC','PM','CM','06','05')

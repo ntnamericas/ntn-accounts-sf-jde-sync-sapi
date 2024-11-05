@@ -1,0 +1,12 @@
+#DB config details
+db:
+  password: "Qsx_13R5"
+  
+#ntn-db-sys-api client details
+ntn:
+  proc:
+    clientSecret: "![]"
+    
+#ntn web service details
+wsdl:
+  password : "SERVICE"  

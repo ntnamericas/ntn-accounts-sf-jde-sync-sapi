@@ -1,0 +1,1 @@
+select * from testdta.f0101 where ABSIC = 'NBCC'

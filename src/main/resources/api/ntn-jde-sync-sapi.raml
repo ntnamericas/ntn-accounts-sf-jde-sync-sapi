@@ -1,0 +1,61 @@
+#%RAML 1.0
+title: ntn-jde-sync-sapi
+version: v1
+baseUri: https://api.example.com
+protocols: [HTTPS,HTTP]
+mediaType: application/json
+securitySchemes:
+  security: !include libraries/securityScheme.raml
+securedBy: [security] 
+
+uses:
+   dt: /libraries/dataTypes.raml
+   rt: /libraries/resourceType.raml
+
+/health:
+  displayName: Get API Health
+  description: |
+    Resource representing an application being online ,turns an HTTP GET and returning a 200.
+  type: 
+    rt.ReadOnlyResourceType:
+      getSuccessResponseType: dt.HealthStatus
+      getSuccessResponse: !include examples/200-health-payload.raml    
+  
+/accounts:
+  displayName: create & update account
+  description:  |
+          Resource to new account in salesforce.   
+  type: 
+    rt.CreateupdateResourceType :
+      postRequestType: !include /dataTypes/request/post-new-account.raml
+      postRequestExample: !include /examples/request/post-new-account.json
+
+  /accountlist:
+    displayName: get an account
+    description:  |
+        Resource to get account list of details from account object database.
+    type: 
+      rt.ReadOnlyResourceType:
+        getSuccessResponseType: dt.HealthStatus
+        getSuccessResponse: !include examples/200-health-payload.raml
+  /accountdetails:
+    displayName: get an account
+    description:  |
+          Resource to get account details from  account object database.
+    type: 
+        rt.ReadOnlyResourceType:
+          getSuccessResponseType: dt.HealthStatus
+          getSuccessResponse: !include examples/200-health-payload.raml    
+
+
+  
+  
+
+     
+
+  
+ 
+ 
+          
+        
+    

@@ -1,0 +1,1 @@
+Select CUDEPT,CUAC04,CUAC06,CUAC36,CUAC32 from testdta.F57DOLCU where CUDEPT in('Rep','Coordinator','Engineering','Mkt')

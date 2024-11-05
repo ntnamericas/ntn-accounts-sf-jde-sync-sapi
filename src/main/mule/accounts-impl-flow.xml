@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
+	
+	<sub-flow name="create-accounts-subflow" doc:id="575cfb1a-a71e-4800-8333-3983b4dd04e8" >
+		<logger level="INFO" doc:name="Logger" doc:id="4a556373-cb6c-4086-8ae7-fc1bca1b01c2" message="========== accounts sync flow started ============"/>
+		<ee:transform doc:name="Transform Message" doc:id="f4d8f6b0-3bad-4f06-a21f-a9c3f86601df" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+ns soapenv http://schemas.xmlsoap.org/soap/envelope/
+ns jp5 http://ntnusa.e1.bssv.JP57SF01/
+ns ntn http://ntnusa.e1.bssv.JP57SF01/
+output application/xml
+---
+{
+	soapenv#Envelope: {
+		soapenv#Header: {
+		},
+		soapenv#Body: {
+			ntn#createAdressbookCustomer: {
+				
+				AC01: payload.nbcaMarket,
+				AC02: payload.region,
+				AC03: payload.custTypeCode,
+				AC04: payload.ntnSalesRep,
+				AC05: payload.customerServiceCoordinatorCode,
+				//AC05: payload.mktRep,
+				AC06: payload.engineer,
+				// AC32: payload.AC32,
+				// AC36: payload.AC36,
+				AC08: payload.ntnMarketCode,
+              //  AC09 : '',
+				AC10: payload.ntnCustomerGroup,
+				AC12: payload.ntnGlobalMarket,
+				ADD1: payload.shippingStreet[0],
+				ADD2: payload.shippingStreet[1],
+				ADD3: payload.shippingStreet[2],
+				ADD4: payload.shippingStreet[3],
+				ADDS: payload.shippingStateCode,
+				ADDZ: payload.shippingPostalCode,
+				ALPH: payload.alphaName,
+				SHAN: payload.jdeAddressNumber,
+				AN8: payload.billToNumber,
+				PA8: payload.parentNumber,
+				AT1: payload.searchType,
+				BADT: payload.billingAddressType,
+				CPGP: payload.shippingCountryCode,
+				CTR: payload.shippingCountryCode,
+				CTY1: payload.shippingCity,
+				DUNS: payload.dunsNumber,
+				fax: payload.fax,
+				phone: payload.phone,
+				SIC: payload.ntnCompanyName,
+				//AN81: payload.billToNumber,
+				//AN86: payload.parentNumber,
+				//ASN: payload.ntnAdvPrcGrp,
+				//AC30: payload.advPriceAG,
+				//AC28: payload.advPriceEMB,
+				//AC26: payload.advPriceUCP,
+                //sessionID: payload.sessionID
+			}
+		}
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="4b47b4fb-a101-4888-a594-efcc84488701" message="#[payload]"/>
+		<try doc:name="Try" doc:id="b7506547-a595-4052-9d4f-af33f1df9bd3" >
+			<wsc:consume doc:name="Consume" doc:id="b4401ced-a45f-4267-807b-f7629ef37def" config-ref="Web_Service_Consumer_Config" operation="createAdressbookCustomer">
+		</wsc:consume>
+			<error-handler >
+				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="3e780918-b47b-467b-b7b8-75b69e202200" type="ANY">
+					<ee:transform doc:name="Transform Message" doc:id="c182b35a-f440-4e5e-967b-3800c93d2e15" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+error.exception.cause.cause.messageString]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+					<logger level="INFO" doc:name="Logger" doc:id="784f0f24-791d-483a-ba18-196fba246af4" message="#[payload]"/>
+				</on-error-propagate>
+			</error-handler>
+		</try>
+		<ee:transform doc:name="Transform Message" doc:id="491f0557-97f1-460e-97d7-749fb490c86e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="31de3cbd-1c69-4eaa-bf41-75c0fa4ba7b3" message="========== accounts sync flow ended ============"/>
+	</sub-flow>
+</mule>
