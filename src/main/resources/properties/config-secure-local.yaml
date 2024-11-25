@@ -6,3 +6,8 @@ db:
 #ntn web service details
 wsdl:
   password : "![5CxDaSFuTAw=]" 
+
+smtp:
+  user: "![hRt1ri9KnH7VngaJcayGZ0D8arLBERHy1f3i+Ca4XPI=]"
+  password: "![Yk3HBzCPPp5RL3nOfWNzirX1mi98hVMs]"  
+  to: "simran.modi@prowesssoft.com"

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
-	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:email="http://www.mulesoft.org/schema/mule/email"
+	xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
 http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
-http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
-	
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
 	<sub-flow name="create-accounts-subflow" doc:id="575cfb1a-a71e-4800-8333-3983b4dd04e8" >
-		<logger level="INFO" doc:name="Logger" doc:id="4a556373-cb6c-4086-8ae7-fc1bca1b01c2" message="========== accounts sync flow started ============"/>
+		<logger level="INFO" doc:name="Logger" doc:id="4a556373-cb6c-4086-8ae7-fc1bca1b01c2" message="#[payload]"/>
 		<ee:transform doc:name="Transform Message" doc:id="f4d8f6b0-3bad-4f06-a21f-a9c3f86601df" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -23,7 +23,7 @@ output application/xml
 		},
 		soapenv#Body: {
 			ntn#createAdressbookCustomer: {
-				
+				ANS: payload."id",
 				AC01: payload.nbcaMarket,
 				AC02: payload.region,
 				AC03: payload.custTypeCode,
@@ -49,7 +49,7 @@ output application/xml
 				PA8: payload.parentNumber,
 				AT1: payload.searchType,
 				BADT: payload.billingAddressType,
-				CPGP: payload.shippingCountryCode,
+				CPGP: payload.customerPriceGroup40PC,
 				CTR: payload.shippingCountryCode,
 				CTY1: payload.shippingCity,
 				DUNS: payload.dunsNumber,
@@ -68,11 +68,19 @@ output application/xml
 	}
 }]]></ee:set-payload>
 			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="id" ><![CDATA[%dw 2.0
+output application/json
+---
+payload.id]]></ee:set-variable>
+				<ee:set-variable variableName="ANS" ><![CDATA[payload."id"]]></ee:set-variable>
+			</ee:variables>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="4b47b4fb-a101-4888-a594-efcc84488701" message="#[payload]"/>
 		<try doc:name="Try" doc:id="b7506547-a595-4052-9d4f-af33f1df9bd3" >
 			<wsc:consume doc:name="Consume" doc:id="b4401ced-a45f-4267-807b-f7629ef37def" config-ref="Web_Service_Consumer_Config" operation="createAdressbookCustomer" targetValue="#[payload.body]">
 		</wsc:consume>
+			<logger level="INFO" doc:name="Logger" doc:id="d965a3fd-473c-43bd-8548-44ec6f1348c8" message="#[payload]"/>
 			<error-handler >
 				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="3e780918-b47b-467b-b7b8-75b69e202200" type="ANY">
 					<ee:transform doc:name="Transform Message" doc:id="c182b35a-f440-4e5e-967b-3800c93d2e15" >
@@ -80,9 +88,11 @@ output application/xml
 							<ee:set-payload ><![CDATA[%dw 2.0
 output application/java
 ---
-error.exception.cause.cause.messageString]]></ee:set-payload>
+error.exception.detailMessage]]></ee:set-payload>
 						</ee:message>
 					</ee:transform>
+					<logger level="INFO" doc:name="Logger" doc:id="201ad550-be81-4935-9154-e56937ffb4e6" />
+					<flow-ref doc:name="Flow Reference" doc:id="ac03e658-5cec-4a97-a7bd-9c950604526b" name="email_notification_sub_Flow"/>
 					<logger level="INFO" doc:name="Logger" doc:id="784f0f24-791d-483a-ba18-196fba246af4" message="#[payload]"/>
 					<ee:transform doc:name="Transform Message" doc:id="c359fd16-ee60-40ea-8cb4-91f06ffc4e49" >
 						<ee:message >
@@ -107,6 +117,12 @@ ns sforce http://soap.sforce.com/2005/09/outbound
 				</on-error-propagate>
 			</error-handler>
 		</try>
+		<db:select doc:name="Select" doc:id="211e6b6c-c62c-4726-ab3b-2d4e8c795441" config-ref="Oracle_JDE_Database_Config" target="AXAN8" targetValue="#[payload[0].AXAN8]">
+			<db:sql ><![CDATA[select AXAN8 from crpdta.f4780 where trim(AXXRTS) = 'SF' and trim(AXDC) = :axdc]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	axdc: vars.ANS
+}]]]></db:input-parameters>
+		</db:select>
 		<ee:transform doc:name="Transform Message" doc:id="27d54bef-f79b-4a3c-b594-5cecb498ec8b" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[output application/json
@@ -129,7 +145,8 @@ var ackValue = if (outMessage == "Success") "true" else "false"
   'soapenv:Envelope' @('xmlns:soapenv': "http://schemas.xmlsoap.org/soap/envelope/"): {
     'soapenv:Body': {
       'notificationsResponse' @('xmlns': "http://soap.sforce.com/2005/09/outbound"): {
-        Ack: ackValue
+        Ack: ackValue, 
+       JDE_AddressNumber__c: vars.AXAN8
       }
     }
   }
@@ -138,5 +155,56 @@ var ackValue = if (outMessage == "Success") "true" else "false"
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="31de3cbd-1c69-4eaa-bf41-75c0fa4ba7b3" message="========== accounts sync flow ended ============"/>
+	</sub-flow>
+	<sub-flow name="email_notification_sub_Flow" doc:id="31527f17-49f3-4c0e-a09a-e2054e8bdb27" >
+		<email:send doc:name="Send" doc:id="29c4da52-8ee9-4f59-8c2c-179049523848" toAddresses="#[p('smtp.to') splitBy &quot;,&quot;]" fromAddress="${secure::smtp.user}" subject="#[&quot;*** E-mail Notification: &quot; ++ p('app.env') ++ &quot; Kind Attention *** Error Alert in  &quot; ++ p('app.name')]" config-ref="Email_SMTP1">
+			<email:body contentType="text/html" encoding="UTF-8">
+				<email:content ><![CDATA[#[%dw 2.0
+output application/xml
+skipNullOn="everywhere"
+
+---
+{
+    "html":{
+        "body":{
+            "div" @(class:"total"):{
+                "div" @(class:"header"):{
+                    "h2":"Alert from Mulesoft"
+                },
+                "div" @(class:"content"):{
+                    "p": "Hi,",
+                    "p": "Greetings!!!",
+					"p": "Error while processing, please take corrective action."
+                },
+
+                "div":{
+                    "table" @(width:'40%', border:'1', cellspacing:'0'): {
+							"tr":{
+                                "th": "InterfaceName",
+                                "td": p('app.name')
+                            },
+                          "tr":{
+                                "th": "Error Type",
+                                "td": error.errorType.asString
+                            },
+                          "tr":{
+                                "th": "Salesforce Id",
+                                "td": vars.id
+                            },
+                          "tr":{
+                                "th": "Error Message",
+                                "td": payload
+                            }
+                                                     
+				
+                        }
+                }
+            }
+        }
+    }
+}]]]></email:content>
+			</email:body>
+		</email:send>
+		<logger level="INFO" doc:name="Logger" doc:id="e5da984e-6c5d-4459-8bcc-678f328fddf0" message='#["email sent"]'/>
 	</sub-flow>
 </mule>

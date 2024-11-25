@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+<mule xmlns:email="http://www.mulesoft.org/schema/mule/email"
+	xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
 	xmlns:db="http://www.mulesoft.org/schema/mule/db"
 	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd 
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
-http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
 	<http:listener-config
 		name="ntn-jde-sync-sapi-httpListenerConfig">
 		<http:listener-connection
@@ -72,4 +73,22 @@ http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/
 			</wsc:web-service-security>
 		</wsc:connection>
 	</wsc:config>
+	<email:smtp-config name="Email_SMTP1" doc:name="Email SMTP" doc:id="170b9aec-3233-419f-9715-acd08590b0e5" >
+		<email:smtp-connection host="${smtp.host}" port="${smtp.port}" user="${secure::smtp.user}" password="${secure::smtp.password}" >
+			<email:properties >
+				<email:property key="mail.smtp.starttls.enable" value="true" />
+			</email:properties>
+		</email:smtp-connection>
+	</email:smtp-config>
+	<db:config name="Oracle_JDE_Database_Config" doc:name="Database Config"
+		doc:id="f16cebad-5a0f-4514-8c70-bebd05a00f3e">
+		<db:oracle-connection host="${db.host}"
+			user="${secure::db.user}" password="${secure::db.password}"
+			serviceName="${db.svc}"
+			port="${db.port}" >
+			<reconnection failsDeployment="true" >
+				<reconnect-forever />
+			</reconnection>
+		</db:oracle-connection>
+	</db:config>	
 </mule>

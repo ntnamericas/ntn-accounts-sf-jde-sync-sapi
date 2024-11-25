@@ -19,8 +19,13 @@ db:
   
   
 #app name
-application:
-  name: ""    
-  
+app:
+  name: "ntn-accounts-sf-jde-sync-sapi"  
+  env: "PRODUCTION"  
+     
+smtp:
+  host: "smtp.office365.com"
+  port: "25"  
+  to: "simran.modi@prowesssoft.com"  
   
 

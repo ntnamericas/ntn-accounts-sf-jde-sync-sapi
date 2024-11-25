@@ -1,7 +1,8 @@
-#DB config details
 db:
-  password: "![uMrGHbWyEL54QEMh+18S/A==]"
+  password: "![ij6UP3XXjZM=]"
+  user: "![c6/KkkNKJ/o=]"
   
+
 
 #ntn web service details
 wsdl:
