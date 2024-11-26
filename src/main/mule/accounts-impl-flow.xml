@@ -45,7 +45,10 @@ output application/xml
 				ADDZ: payload.shippingPostalCode,
 				ALPH: payload.alphaName,
 				SHAN: payload.jdeAddressNumber,
-				AN8: payload.billToNumber,
+				AN8:      if (payload.billToNumber != null) 
+      ((payload.billToNumber[0 to 7] as Number) - 90000000)
+    else 
+      null,
 				PA8: payload.parentNumber,
 				AT1: payload.searchType,
 				BADT: payload.billingAddressType,
