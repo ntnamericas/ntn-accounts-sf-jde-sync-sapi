@@ -44,12 +44,18 @@ output application/xml
 				ADDS: payload.shippingStateCode,
 				ADDZ: payload.shippingPostalCode,
 				ALPH: payload.alphaName,
-				SHAN: payload.jdeAddressNumber,
+				SHAN:  if (payload.jdeAddressNumber != null)
+                      ((payload.jdeAddressNumber[0 to 7] as Number) - 90000000)
+    else 
+      null ,
 				AN8:      if (payload.billToNumber != null) 
       ((payload.billToNumber[0 to 7] as Number) - 90000000)
     else 
       null,
-				PA8: payload.parentNumber,
+				PA8: if(payload.parentNumber != null) 
+      ((payload.parentNumber[0 to 7] as Number) - 90000000)
+    else 
+      null,
 				AT1: payload.searchType,
 				BADT: payload.billingAddressType,
 				CPGP: payload.customerPriceGroup40PC,
