@@ -44,15 +44,18 @@ output application/xml
 				ADDS: payload.shippingStateCode,
 				ADDZ: payload.shippingPostalCode,
 				ALPH: payload.alphaName,
-				SHAN:  if (payload.jdeAddressNumber != null)
-                      ((payload.jdeAddressNumber[0 to 7] as Number) - 90000000)
+				SHAN:  if (payload.jdeAddressNumber != null and payload.jdeAddressNumber as Number   <=  90000000) payload.jdeAddressNumber
+                else if (payload.jdeAddressNumber != null and payload.jdeAddressNumber as Number   >  90000000) 
+      ((payload.jdeAddressNumber[0 to 7] as Number) - 90000000)
     else 
       null ,
-				AN8:      if (payload.billToNumber != null) 
+				AN8:      if (payload.billToNumber != null and payload.billToNumber as Number   <=  90000000) payload.billToNumber
+                else if (payload.billToNumber != null and payload.billToNumber as Number   >  90000000) 
       ((payload.billToNumber[0 to 7] as Number) - 90000000)
     else 
       null,
-				PA8: if(payload.parentNumber != null) 
+				PA8:  if (payload.parentNumber != null and payload.parentNumber as Number   <=  90000000) payload.parentNumber
+                else if (payload.parentNumber != null and payload.parentNumber as Number   >  90000000) 
       ((payload.parentNumber[0 to 7] as Number) - 90000000)
     else 
       null,
