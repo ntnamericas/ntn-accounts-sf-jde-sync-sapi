@@ -119,8 +119,8 @@ ns sforce http://soap.sforce.com/2005/09/outbound
   'soapenv:Envelope' @('xmlns:soapenv': "http://schemas.xmlsoap.org/soap/envelope/"): {
     'soapenv:Body': {
       'notificationsResponse' @('xmlns': "http://soap.sforce.com/2005/09/outbound"): {
-        Ack: "false" ,
-        JDE_AddressNumber__c: vars.jdeAddressNumber
+        Ack: "false" 
+//        JDE_AddressNumber__c: vars.jdeAddressNumber
       }
     }
   }
@@ -130,6 +130,7 @@ ns sforce http://soap.sforce.com/2005/09/outbound
 ]]></ee:set-payload>
 						</ee:message>
 					</ee:transform>
+					<logger level="INFO" doc:name="Logger" doc:id="e5d42a39-582e-4590-89ed-03c62fd57c2c" message="#[payload]"/>
 				</on-error-propagate>
 			</error-handler>
 		</try>
@@ -155,8 +156,8 @@ var ackValue = if (outMessage == "Success") "true" else "false"
   'soapenv:Envelope' @('xmlns:soapenv': "http://schemas.xmlsoap.org/soap/envelope/"): {
     'soapenv:Body': {
       'notificationsResponse' @('xmlns': "http://soap.sforce.com/2005/09/outbound"): {
-        Ack: ackValue, 
-       JDE_AddressNumber__c: vars.jdeAddressNumber
+        Ack: ackValue
+//       JDE_AddressNumber__c: vars.jdeAddressNumber
       }
     }
   }
