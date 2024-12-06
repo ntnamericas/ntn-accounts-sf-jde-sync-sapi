@@ -31,7 +31,7 @@ http-request:
 #app name
 app:
   name: "ntn-accounts-sf-jde-sync-sapi"  
-  env: "DEV"  
+  env: "UAT"  
   
 smtp:
   host: "smtp.office365.com"

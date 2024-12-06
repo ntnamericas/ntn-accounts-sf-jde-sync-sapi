@@ -95,7 +95,7 @@ payload.id]]></ee:set-variable>
 		</wsc:consume>
 			<logger level="INFO" doc:name="Logger" doc:id="d965a3fd-473c-43bd-8548-44ec6f1348c8" message="#[payload]"/>
 			<error-handler >
-				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="3e780918-b47b-467b-b7b8-75b69e202200" type="ANY">
+				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="3e780918-b47b-467b-b7b8-75b69e202200" type="WSC:BAD_REQUEST, WSC:BAD_RESPONSE, WSC:CANNOT_DISPATCH, WSC:CONNECTIVITY, WSC:EMPTY_RESPONSE, WSC:ENCODING, WSC:INVALID_WSDL, WSC:RETRY_EXHAUSTED, WSC:SOAP_FAULT, WSC:TIMEOUT, EXPRESSION, STREAM_MAXIMUM_SIZE_EXCEEDED">
 					<ee:transform doc:name="Transform Message" doc:id="c182b35a-f440-4e5e-967b-3800c93d2e15" >
 						<ee:message >
 							<ee:set-payload ><![CDATA[%dw 2.0
@@ -119,7 +119,7 @@ ns sforce http://soap.sforce.com/2005/09/outbound
   'soapenv:Envelope' @('xmlns:soapenv': "http://schemas.xmlsoap.org/soap/envelope/"): {
     'soapenv:Body': {
       'notificationsResponse' @('xmlns': "http://soap.sforce.com/2005/09/outbound"): {
-        Ack: "false" 
+        Ack: false 
 //        JDE_AddressNumber__c: vars.jdeAddressNumber
       }
     }
@@ -149,7 +149,7 @@ ns soapenv http://schemas.xmlsoap.org/soap/envelope/
 ns sforce http://soap.sforce.com/2005/09/outbound
 
 var outMessage = payload.createAdressbookCustomerResponse.outMessage
-var ackValue = if (outMessage == "Success") "true" else "false"
+var ackValue = if (outMessage == "Success") true else false
 
 ---
 {
