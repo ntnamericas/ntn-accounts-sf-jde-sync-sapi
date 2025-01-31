@@ -15,7 +15,12 @@ db:
 ntn:
   proc:
     clientId: "" 
+
     
+        
+sf:
+  authURL: "https://test.salesforce.com/services/Soap/u/56.0" 
+                  
 #ntn web service details
 wsdl:
   path : "wsdl/Accounts.wsdl"

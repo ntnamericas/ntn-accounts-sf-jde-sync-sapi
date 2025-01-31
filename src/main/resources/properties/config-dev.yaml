@@ -5,21 +5,22 @@ https:
   path: "/api/v1/*"
 
 
-  
-#DB config details
 db:
-  host: "129.147.16.140"
+  host: "129.147.16.139"
   port: "1521"
-  user: "c_mulesoft"
-  serviceName: "jdorcldv.netjiuwoz.vcnzgqox.oraclevcn.com"
-  
+  svc: "jdorclpy.netjiuwoz.vcnzgqox.oraclevcn.com"
 
 
 #ntn-accounts-sync-papi client details
 ntn:
   proc:
     clientId: "" 
+
     
+        
+sf:
+  authURL: "https://test.salesforce.com/services/Soap/u/56.0" 
+                  
 #ntn web service details
 wsdl:
   path : "wsdl/Accounts.wsdl"
@@ -35,7 +36,7 @@ http-request:
 #app name
 app:
   name: "ntn-accounts-sf-jde-sync-sapi"  
-  env: "DEV"  
+  env: "UAT"  
   
 smtp:
   host: "smtp.office365.com"
