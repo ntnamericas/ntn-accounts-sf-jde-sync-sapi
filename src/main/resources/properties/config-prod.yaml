@@ -19,7 +19,7 @@ wsdl:
   path : "wsdl/Accounts.wsdl"
   service : "SalesForceProcessManagerService"
   port : "SalesForceProcessManagerPort"
-  address : "https://ntnpy.opc.oracleoutsourcing.com/PY920/SalesForceProcessManager"
+  address : "https://ntnpd.opc.oracleoutsourcing.com/PD920/SalesForceProcessManager"
   username : "BIZSERVICE"
   
 #Request Timeout config
