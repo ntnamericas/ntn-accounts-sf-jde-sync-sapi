@@ -1,3 +1,20 @@
-#DB config details
 db:
-  password: ""
+  password: "![qShUQca+XRPO80VgwER8uQ==]"
+  user: "![7QqCW9QjsxUigvR2UPZDgw==]"
+  
+
+
+#ntn web service details
+wsdl:
+  password : "![5CxDaSFuTAw=]" 
+
+  
+smtp:
+  user: "![hRt1ri9KnH7VngaJcayGZ0D8arLBERHy1f3i+Ca4XPI=]"
+  password: "![Yk3HBzCPPp5RL3nOfWNzirX1mi98hVMs]"
+  
+    
+sf:
+  token: "![pxS/bMSXsKXRM/Ph2PWwFqE1Lk9fXlTzNNGx3zwfAz8=]"
+  password: "![2YNZt1lm+MRm7qkhAuEumw==]"
+  user: "![hRt1ri9KnH4qzOtJxnTIpRiC0yiHqDLpKpzaFPQu0vc=]"        
