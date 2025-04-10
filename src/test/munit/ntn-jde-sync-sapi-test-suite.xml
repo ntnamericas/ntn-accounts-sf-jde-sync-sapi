@@ -8,7 +8,7 @@
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 	<munit:config name="ntn-jde-sync-sapi-test-suite.xml" />
-	<munit:test name="ntn-jde-sync-sapi-test-suite-ntn-jde-sync-sapi-mainTest" doc:id="880f63c9-1053-46e7-9732-8278315ec999" description="Test">
+	<munit:test name="ntn-jde-sync-sapi-test-suite-ntn-jde-sync-sapi-mainTest-1" doc:id="880f63c9-1053-46e7-9732-8278315ec999" description="Test">
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock when" doc:id="a6e5d23c-4e5a-407d-9ff4-a36cd50aba95" processor="apikit:router">
 				<munit-tools:with-attributes >
@@ -23,7 +23,7 @@
 			<munit-tools:assert-that doc:name="Assert that" doc:id="8f3bed7c-de01-4190-bbc7-c426c5f7cba0" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="ntn-jde-sync-sapi-test-suite-post:\accounts:application\json:ntn-jde-sync-sapi-configTest" doc:id="99d9beea-98b9-48f9-b236-d4912e7bf41c" description="Test">
+	<munit:test name="ntn-jde-sync-sapi-test-suite-post:\accounts:application\json:ntn-jde-sync-sapi-configTest-1" doc:id="99d9beea-98b9-48f9-b236-d4912e7bf41c" description="Test">
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock when" doc:id="750beb74-8173-4c0a-a139-7f38e10d4ec1" processor="flow-ref">
 				<munit-tools:with-attributes >
@@ -38,7 +38,7 @@
 			<munit-tools:assert-that doc:name="Assert that" doc:id="b6732413-a6e2-41c5-b79a-7c5d7b1295ea" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="accounts-impl-flow-test-suite-create-accounts-subflowTest" doc:id="f6fe984a-70d4-49a9-9ea5-a448f21e2506" description="Test" >
+	<munit:test name="accounts-impl-flow-test-suite-create-accounts-subflowTest-1" doc:id="f6fe984a-70d4-49a9-9ea5-a448f21e2506" description="Test" >
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock when" doc:id="a1fee00a-c4eb-43f1-ae41-6c04e3b717b3" processor="wsc:consume" >
 				<munit-tools:with-attributes >
@@ -59,7 +59,7 @@
 			<munit-tools:assert-that doc:name="Assert that" doc:id="dbad5857-191a-463a-8024-69124153f22a" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
 		</munit:validation>
 	</munit:test>
-	<munit:test name="accounts-impl-flow-test-suite-create-accounts-subflow-negative" doc:id="b6f64a27-d774-4038-a036-588e983e7bc3" description="Test" expectedErrorType="ANY">
+	<munit:test name="accounts-impl-flow-test-suite-create-accounts-subflow-negative-1" doc:id="b6f64a27-d774-4038-a036-588e983e7bc3" description="Test" expectedErrorType="ANY">
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock when" doc:id="2ca9635d-bbbb-48c7-9048-c216d3b75e74" processor="wsc:consume" >
 				<munit-tools:with-attributes >
@@ -80,7 +80,7 @@
 			<munit-tools:assert-that doc:name="Assert that" doc:id="ce2f80f3-997f-4b2b-a56c-1a42526c9559" expression="#[payload]" is="#[MunitTools::notNullValue()]" />
 		</munit:validation>
 	</munit:test>
-	<munit:test name="accounts-impl-flow-test-suite-create-accounts-subflow-negative1" doc:id="93c2e736-26b6-459c-923e-0f29cb519a0c" description="Test" expectedErrorType="ANY" >
+	<munit:test name="accounts-impl-flow-test-suite-create-accounts-subflow-negative11" doc:id="93c2e736-26b6-459c-923e-0f29cb519a0c" description="Test" expectedErrorType="ANY" >
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock when" doc:id="0e9c3b15-3a90-43cc-ba1b-c663388cbea7" processor="wsc:consume" >
 				<munit-tools:with-attributes >

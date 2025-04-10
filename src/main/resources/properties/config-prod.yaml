@@ -16,7 +16,7 @@ sf:
                   
 #ntn web service details
 wsdl:
-  path : "wsdl/Accounts.wsdl"
+  path : "https://ntnpd.opc.oracleoutsourcing.com/PD920/CPQPartsManager?wsdl"
   service : "SalesForceProcessManagerService"
   port : "SalesForceProcessManagerPort"
   address : "https://ntnpd.opc.oracleoutsourcing.com/PD920/SalesForceProcessManager"

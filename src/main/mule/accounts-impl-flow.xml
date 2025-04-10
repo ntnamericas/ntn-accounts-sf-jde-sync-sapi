@@ -8,6 +8,7 @@ http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+	
 	<sub-flow name="create-accounts-subflow" doc:id="575cfb1a-a71e-4800-8333-3983b4dd04e8" >
 		<logger level="INFO" doc:name="Logger" doc:id="4a556373-cb6c-4086-8ae7-fc1bca1b01c2" message="#[payload]"/>
 		<ee:transform doc:name="Transform Message" doc:id="f4d8f6b0-3bad-4f06-a21f-a9c3f86601df" >
@@ -104,7 +105,7 @@ payload.id]]></ee:set-variable>
 							<ee:set-payload ><![CDATA[%dw 2.0
 output application/java
 ---
-error.exception.detailMessage]]></ee:set-payload>
+error.detailedDescription]]></ee:set-payload>
 						</ee:message>
 					</ee:transform>
 					<logger level="INFO" doc:name="Logger" doc:id="98fb3603-183a-47f1-b312-78e2c84533b9" />
@@ -141,7 +142,7 @@ ns sforce http://soap.sforce.com/2005/09/outbound
 							<ee:set-payload><![CDATA[%dw 2.0
 output application/java
 ---
-error.exception.detailMessage]]></ee:set-payload>
+error.detailedDescription]]></ee:set-payload>
 						</ee:message>
 					</ee:transform>
 					<logger level="INFO" doc:name="Logger" doc:id="201ad550-be81-4935-9154-e56937ffb4e6" />
@@ -178,7 +179,7 @@ ns sforce http://soap.sforce.com/2005/09/outbound
 							<ee:set-payload><![CDATA[%dw 2.0
 output application/java
 ---
-error.exception.detailMessage]]></ee:set-payload>
+error.detailedDescription]]></ee:set-payload>
 						</ee:message>
 					</ee:transform>
 					<logger level="INFO" doc:name="Logger" doc:id="28a6fdb8-a59a-47bf-955e-2044e0e439ad" />
@@ -312,7 +313,7 @@ output application/json
 		</choice>
 	</sub-flow>
 	<sub-flow name="email_notification_sub_Flow" doc:id="31527f17-49f3-4c0e-a09a-e2054e8bdb27" >
-		<email:send doc:name="Send" doc:id="29c4da52-8ee9-4f59-8c2c-179049523848" toAddresses="#[p('smtp.to') splitBy &quot;,&quot;]" fromAddress="${secure::smtp.user}" subject="#[&quot;*** E-mail Notification: &quot; ++ p('app.env') ++ &quot; Kind Attention *** Error Alert in  &quot; ++ p('app.name')]" config-ref="Email_SMTP1">
+		<email:send doc:name="Send" doc:id="29c4da52-8ee9-4f59-8c2c-179049523848" toAddresses="#[p('smtp.to') splitBy &quot;,&quot;]" subject="#[&quot;*** E-mail Notification: &quot; ++ p('app.env') ++ &quot; Kind Attention *** Error Alert in  &quot; ++ p('app.name')]" config-ref="Email_SMTP1" fromAddress="${secure::smtp.user}">
 			<email:body contentType="text/html" encoding="UTF-8">
 				<email:content ><![CDATA[#[%dw 2.0
 output application/xml
@@ -340,7 +341,7 @@ skipNullOn="everywhere"
                             },
                           "tr":{
                                 "th": "Error Type",
-                                "td": error.errorType.asString
+                                "td": error.errorType[0]
                             },
                           "tr":{
                                 "th": "Salesforce Id",

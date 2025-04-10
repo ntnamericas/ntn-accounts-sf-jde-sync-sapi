@@ -27,7 +27,7 @@ wsdl:
   service : "SalesForceProcessManagerService"
   port : "SalesForceProcessManagerPort"
   address : "https://ntnpy.opc.oracleoutsourcing.com/PY920/SalesForceProcessManager"
-  username : "BIZSERVICE"
+  username : "BIZSERVIC"
   
 #Request Timeout config
 http-request:
@@ -41,5 +41,5 @@ app:
 smtp:
   host: "smtp.office365.com"
   port: "25"  
-  to: "simran.modi@prowesssoft.com"
+  to: "simran.modi@prowesssoft.com,suman.chatterjee@prowesssoft.com"
 

@@ -59,10 +59,10 @@ http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mu
 		doc:name="Web Service Consumer Config"
 		doc:id="e274648a-7309-411e-ac79-59d37192b614">
 		<wsc:connection
-			wsdlLocation="https://ntnpy.opc.oracleoutsourcing.com/PY920/SalesForceProcessManager?wsdl"
-			service="SalesForceProcessManagerService"
-			port="SalesForceProcessManagerPort"
-			address="https://ntnpy.opc.oracleoutsourcing.com:443/PY920/SalesForceProcessManager">
+			wsdlLocation="${wsdl.path}"
+			service="${wsdl.service}"
+			port="${wsdl.port}"
+			address="${wsdl.address}">
 			<wsc:custom-transport-configuration>
 				<wsc:default-http-transport-configuration
 					timeout="60000" />
