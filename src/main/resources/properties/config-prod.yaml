@@ -9,6 +9,7 @@ db:
   host: "129.147.16.38"
   port: "1521"
   svc: "jdeorcl.netuenazr.vcnzgqox.oraclevcn.com"
+  query: "SELECT AXAN8 FROM PRODDTA.F4780 WHERE trim(AXDC) = :AXAN8 and  AXXRTS = 'SF'"
     
         
 sf:
@@ -16,7 +17,7 @@ sf:
                   
 #ntn web service details
 wsdl:
-  path : "https://ntnpd.opc.oracleoutsourcing.com/PD920/CPQPartsManager?wsdl"
+  path : "https://ntnpd.opc.oracleoutsourcing.com/PD920/SalesForceProcessManager?wsdl"
   service : "SalesForceProcessManagerService"
   port : "SalesForceProcessManagerPort"
   address : "https://ntnpd.opc.oracleoutsourcing.com/PD920/SalesForceProcessManager"
@@ -35,4 +36,6 @@ smtp:
   host: "smtp.office365.com"
   port: "25"  
   to: "donotreply@ntnusa.com,ntnmule@prowesssoft.com"
+  
+
 
