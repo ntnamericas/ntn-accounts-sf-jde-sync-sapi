@@ -4,47 +4,42 @@ https:
   port: "8083"
   path: "/api/v1/*"
 
-# API specification
-api:
-  #Replace with respective autodiscovery id
-  autodiscoveryID: ""
-  
-#DB config details
+
 db:
-  host: "129.147.16.140"
+  host: "129.147.16.139"
   port: "1521"
-  user: "c_mulesoft"
-  serviceName: "jdorcldv.netjiuwoz.vcnzgqox.oraclevcn.com"
-  
-#ntn-accounts-sync-papi Listener configuration
-proc-request:
-  https:
-    accounts-method: "POST"
-    protocol: "http"
-    host: "0.0.0.0"
-    port: "8082"
-    accounts: "/api/jde/accounts"
+  svc: "jdorclpy.netjiuwoz.vcnzgqox.oraclevcn.com"
+
 
 #ntn-accounts-sync-papi client details
 ntn:
   proc:
     clientId: "" 
+
     
+        
+sf:
+  authURL: "https://test.salesforce.com/services/Soap/u/56.0" 
+                  
 #ntn web service details
 wsdl:
   path : "wsdl/Accounts.wsdl"
   service : "SalesForceProcessManagerService"
   port : "SalesForceProcessManagerPort"
   address : "https://ntnpy.opc.oracleoutsourcing.com/PY920/SalesForceProcessManager"
-  username : "BIZSERVICE"
+  username : "BIZSERVIC"
   
 #Request Timeout config
 http-request:
   timeout: "6000000"  
 
 #app name
-application:
-  name: ""    
+app:
+  name: "ntn-accounts-sf-jde-sync-sapi"  
+  env: "UAT"  
   
-  
+smtp:
+  host: "smtp.office365.com"
+  port: "25"  
+  to: "simran.modi@prowesssoft.com,suman.chatterjee@prowesssoft.com"
 
