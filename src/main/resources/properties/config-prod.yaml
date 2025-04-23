@@ -9,7 +9,8 @@ db:
   host: "129.147.16.38"
   port: "1521"
   svc: "jdeorcl.netuenazr.vcnzgqox.oraclevcn.com"
-  query: "SELECT AXAN8 FROM PRODDTA.F4780 WHERE trim(AXDC) = :AXAN8 and  AXXRTS = 'SF'"
+  query: "SELECT MAX(AXAN8) AS AXAN8 FROM PRODDTA.F4780 WHERE trim(AXDC) = :ID and  trim(AXXRTS) = 'SF'"
+  #query: "SELECT AXDC FROM PRODDTA.F4780 WHERE trim(AXAN8) = :AN8 and  trim(AXXRTS) = 'SF'"
     
         
 sf:

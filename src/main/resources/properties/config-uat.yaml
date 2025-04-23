@@ -9,7 +9,7 @@ db:
   host: "129.147.16.139"
   port: "1521"
   svc: "jdorclpy.netjiuwoz.vcnzgqox.oraclevcn.com"
-  query: "SELECT AXAN8 FROM CRPDTA.F4780 WHERE trim(AXDC) = :AXAN8 and  AXXRTS = 'SF'"
+  query: "SELECT AXDC FROM CRPDTA.F4780 WHERE trim(AXAN8) = :AN8 and  trim(AXXRTS) = 'SF'"
 
 
 #ntn-accounts-sync-papi client details

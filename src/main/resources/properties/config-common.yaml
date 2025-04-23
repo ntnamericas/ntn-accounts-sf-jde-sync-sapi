@@ -13,13 +13,7 @@ common:
 untilSuccess:
   retries: "2"
   timeInterval: "3000"    
-  
-#Source and Target Names
-source:
-  name: "EventFlow"  
-target:
-  name: "PDI-Enterprise"  
-  
+
 #Logger category
 milestone:
   category: "LOG"

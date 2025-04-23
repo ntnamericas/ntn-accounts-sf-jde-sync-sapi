@@ -13,76 +13,7 @@ http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mu
 		<logger level="INFO" doc:name="Logger" doc:id="4a556373-cb6c-4086-8ae7-fc1bca1b01c2" message="#[payload]"/>
 		<ee:transform doc:name="Transform Message" doc:id="f4d8f6b0-3bad-4f06-a21f-a9c3f86601df" >
 			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-ns soapenv http://schemas.xmlsoap.org/soap/envelope/
-ns jp5 http://ntnusa.e1.bssv.JP57SF01/
-ns ntn http://ntnusa.e1.bssv.JP57SF01/
-output application/xml
----
-{
-	soapenv#Envelope: {
-		soapenv#Header: {
-		},
-		soapenv#Body: {
-			ntn#createAdressbookCustomer: {
-				ANS: payload."id",
-				AC01: payload.nbcaMarket,
-				AC02: payload.region,
-				AC03: payload.custTypeCode,
-				AC04: payload.ntnSalesRep,
-				AC05: payload.customerServiceCoordinatorCode,
-				AC06: payload.engineer,
-				AC08: payload.ntnMarketCode,
-				AC10: payload.ntnCustomerGroup,
-				AC12: payload.ntnGlobalMarket,
-				ADD1: payload.shippingStreet[0],
-				ADD2: payload.shippingStreet[1],
-				ADD3: payload.shippingStreet[2],
-				ADD4: payload.shippingStreet[3],
-				ADDS: payload.shippingStateCode,
-				ADDZ: payload.shippingPostalCode,
-				ALPH: payload.alphaName,
-				SHAN: if (payload.jdeAddressNumber != null) 
-				        if (payload.jdeAddressNumber as Number <= 90000000) 
-				            payload.jdeAddressNumber
-				        else if (payload.jdeAddressNumber as Number <= 900000000) 
-				            (payload.jdeAddressNumber as Number - 90000000)
-				        else 
-				            (payload.jdeAddressNumber as Number - 900000000)
-				      else 
-				        null,
-				AN8: if (payload.billToNumber != null) 
-				        if (payload.billToNumber as Number <= 90000000) 
-				            payload.billToNumber
-				        else if (payload.billToNumber as Number <= 900000000) 
-				            (payload.billToNumber as Number - 90000000)
-				        else 
-				            (payload.billToNumber as Number - 900000000)
-				     else 
-				        null,
-				PA8: if (payload.parentNumber != null) 
-				        if (payload.parentNumber as Number <= 90000000) 
-				            payload.parentNumber
-				        else if (payload.parentNumber as Number <= 900000000) 
-				            (payload.parentNumber as Number - 90000000)
-				        else 
-				            (payload.parentNumber as Number - 900000000)
-				     else 
-				        null,
-				AT1: payload.searchType,
-				BADT: payload.billingAddressType,
-				CPGP: payload.customerPriceGroup40PC,
-				CTR: payload.shippingCountryCode,
-				CTY1: payload.shippingCity,
-				DUNS: payload.dunsNumber,
-				fax: payload.fax,
-				phone: payload.phone,
-				SIC: payload.ntnCompanyName
-			}
-		}
-	}
-}
-]]></ee:set-payload>
+				<ee:set-payload resource="dwl/bssv-payload.dwl" />
 			</ee:message>
 			<ee:variables >
 				<ee:set-variable variableName="id" ><![CDATA[%dw 2.0
@@ -95,7 +26,7 @@ payload.id]]></ee:set-variable>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="4b47b4fb-a101-4888-a594-efcc84488701" message="#[payload]"/>
 		<try doc:name="Try" doc:id="b7506547-a595-4052-9d4f-af33f1df9bd3">
-			<wsc:consume doc:name="Consume" doc:id="b4401ced-a45f-4267-807b-f7629ef37def" config-ref="Web_Service_Consumer_Config" operation="createAdressbookCustomer" targetValue="#[payload.body]">
+			<wsc:consume doc:name="Consume" doc:id="b4401ced-a45f-4267-807b-f7629ef37def" config-ref="Web_Service_Consumer_Config" operation="createAdressbookCustomer">
 		</wsc:consume>
 			<logger level="INFO" doc:name="Logger" doc:id="d965a3fd-473c-43bd-8548-44ec6f1348c8" message="#[payload]" />
 			<error-handler>
@@ -155,41 +86,41 @@ error.detailedDescription]]></ee:set-payload>
 					<flow-ref doc:name="Flow Reference" doc:id="d2ae38d9-7309-46d6-9c0d-574f3bb56713" name="email_notification_sub_Flow" />
 					<logger level="INFO" doc:name="Logger" doc:id="8598afde-da2d-47b6-a1e1-8c9b0f8079ba" message="#[payload]" />
 				</on-error-propagate>
-				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="f3af7d69-82c6-41fe-9c90-9a2970db9abc" type="WSC:SOAP_FAULT">
+				<!-- [STUDIO:"On Error Propagate"]<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="f3af7d69-82c6-41fe-9c90-9a2970db9abc" type="WSC:SOAP_FAULT">
 					<ee:transform doc:name="Transform Message" doc:id="c182b35a-f440-4e5e-967b-3800c93d2e15">
 						<ee:message>
 							<ee:set-payload><![CDATA[%dw 2.0
 output application/java
----
-error.detailedDescription]]></ee:set-payload>
+&#45;&#45;-
+error.detailedDescription&#93;&#93;></ee:set-payload>
 						</ee:message>
 						<ee:variables >
 							<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
 output application/java
----
-400]]></ee:set-variable>
+&#45;&#45;-
+400&#93;&#93;></ee:set-variable>
 							<ee:set-variable variableName="errorResponse" ><![CDATA[%dw 2.0
 output application/java
----
-error.detailedDescription]]></ee:set-variable>
+&#45;&#45;-
+error.detailedDescription&#93;&#93;></ee:set-variable>
 						</ee:variables>
 					</ee:transform>
 					<logger level="INFO" doc:name="Logger" doc:id="201ad550-be81-4935-9154-e56937ffb4e6" />
 					<flow-ref doc:name="Flow Reference" doc:id="ac03e658-5cec-4a97-a7bd-9c950604526b" name="email_notification_sub_Flow" />
-					<logger level="INFO" doc:name="Logger" doc:id="784f0f24-791d-483a-ba18-196fba246af4" message="#[payload]" />
+					<logger level="INFO" doc:name="Logger" doc:id="784f0f24-791d-483a-ba18-196fba246af4" message="#[payload&#93;" />
 					<ee:transform doc:name="Transform Message" doc:id="c359fd16-ee60-40ea-8cb4-91f06ffc4e49">
 						<ee:message>
 							<ee:set-payload><![CDATA[%dw 2.0
 output application/json
----
+&#45;&#45;-
 
 vars.errorResponse
 
-]]></ee:set-payload>
+&#93;&#93;></ee:set-payload>
 						</ee:message>
 					</ee:transform>
-					<logger level="INFO" doc:name="Logger" doc:id="e5d42a39-582e-4590-89ed-03c62fd57c2c" message="#[payload]" />
-				</on-error-propagate>
+					<logger level="INFO" doc:name="Logger" doc:id="e5d42a39-582e-4590-89ed-03c62fd57c2c" message="#[payload&#93;" />
+				</on-error-propagate> [STUDIO] -->
 			</error-handler>
 		</try>
 		<choice doc:name="Choice" doc:id="450019dd-5233-4f01-94bc-c1b01978de0f">
@@ -232,7 +163,7 @@ var ackValue = if (outMessage == "Success") true else false
 				<db:select doc:name="Select" doc:id="4e9e23be-348f-4002-90ff-f369009deab4" config-ref="Oracle_JDE_Database_Config">
 					<db:sql ><![CDATA[${db.query}]]></db:sql>
 					<db:input-parameters ><![CDATA[#[{
-	AXAN8: vars.AN8
+	ID: vars.id
 }]]]></db:input-parameters>
 		</db:select>
 				<ee:transform doc:name="Transform Message" doc:id="82905533-8e9e-42b9-ba5a-cb5029acbb1f" >

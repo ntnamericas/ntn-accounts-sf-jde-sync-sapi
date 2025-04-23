@@ -9,14 +9,7 @@ db:
   host: "129.147.16.139"
   port: "1521"
   svc: "jdorclpy.netjiuwoz.vcnzgqox.oraclevcn.com"
-  query: "SELECT AXAN8 FROM CRPDADTA.F4780 WHERE trim(AXDC) = :AXAN8 and  AXXRTS = 'SF'"
-
-
-#ntn-accounts-sync-papi client details
-ntn:
-  proc:
-    clientId: "" 
-
+  query: "SELECT MAX(AXAN8) AS AXAN8 FROM CRPDTA.F4780 WHERE trim(AXDC) = :ID and  trim(AXXRTS) = 'SF'"
     
         
 sf:
