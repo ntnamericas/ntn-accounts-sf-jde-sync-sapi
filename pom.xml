@@ -2,19 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mycompany</groupId>
+	<groupId>com.ntn</groupId>
 	<artifactId>ntn-jde-sync-sapi</artifactId>
-	<version>1.1.0-rc7</version>
+	<version>1.1.0-rc9</version>
 	<packaging>mule-application</packaging>
 
-	<name>ntn-accounts-sf-jde-sync-sapi</name>
+	<name>ntn-jde-sync-sapi</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<app.runtime>4.9.1</app.runtime>
-		<mule.maven.plugin.version>4.4.0</mule.maven.plugin.version>
+		<mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
 		<munit.version>3.0.0</munit.version>
 	</properties>
 
@@ -30,15 +30,24 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
-				<configuration>
+				<!-- <configuration>
 					<sharedLibraries>
 						<sharedLibrary>
 							<groupId>com.mycompany</groupId>
-							<artifactId>ojdbc8-12.2.0.1</artifactId>
+							<artifactId>ojdbc8-12.2.0.1-0.1</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
 					<classifier>mule-application</classifier>
-				</configuration>
+				</configuration> -->
+				<configuration>
+			        <sharedLibraries>
+			            <sharedLibrary>
+			                <groupId>com.oracle.database.jdbc</groupId>
+			                <artifactId>ojdbc11</artifactId>
+			            </sharedLibrary>
+			        </sharedLibraries>
+			        <classifier>mule-application</classifier>
+			    </configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.mulesoft.munit.tools</groupId>
@@ -67,17 +76,12 @@
 	</build>
 
 	<dependencies>
-		<!-- 		<dependency>
+		<!--<dependency>
 			<groupId>e78cb80e-5627-43bc-8962-f4d269c5ef87</groupId>
 			<artifactId>ntn-jde-sync-sapi</artifactId>
 			<version>1.0.1</version>
 			<classifier>raml</classifier>
 			<type>zip</type>
-		</dependency> -->
-		<!-- 		<dependency>
-			<groupId>com.oracle.ojdbc</groupId>
-			<artifactId>ojdbc8</artifactId>
-			<version>19.3.0.0</version>
 		</dependency> -->
 		<dependency>
 			<groupId>com.mulesoft.modules</groupId>
@@ -85,10 +89,10 @@
 			<version>1.2.7</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
-		<!-- 		<dependency>
+		<!--<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-db-connector</artifactId>
-			<version>1.14.9</version>
+			<version>1.14.13</version>
 			<classifier>mule-plugin</classifier>
 		</dependency> -->
 		<!-- 		<dependency>
@@ -96,17 +100,6 @@
 			<artifactId>ojdbc8-12.2.0.1</artifactId>
 			<version>0.1</version>
 		</dependency> -->
-		<!-- 		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-db-connector</artifactId>
-			<version>1.14.9</version>
-			<classifier>mule-plugin</classifier>
-		</dependency> -->
-		<dependency>
-			<groupId>com.mycompany</groupId>
-			<artifactId>ojdbc8-12.2.0.1</artifactId>
-			<version>0.1</version>
-		</dependency>
 		<dependency>
 			<groupId>org.mule.weave</groupId>
 			<artifactId>assertions</artifactId>
@@ -168,6 +161,16 @@
 			<artifactId>mule-db-connector</artifactId>
 			<version>1.14.13</version>
 			<classifier>mule-plugin</classifier>
+		</dependency>
+		<!-- <dependency>
+		    <groupId>com.oracle.database.jdbc</groupId>
+		    <artifactId>ojdbc8</artifactId>
+		    <version>21.9.0.0</version>
+		</dependency> -->
+		<dependency>
+		    <groupId>com.oracle.database.jdbc</groupId>
+		    <artifactId>ojdbc11</artifactId>
+		    <version>23.9.0.25.07</version>
 		</dependency>
 	</dependencies>
 
