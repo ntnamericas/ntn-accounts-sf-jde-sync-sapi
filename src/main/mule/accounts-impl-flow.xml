@@ -30,7 +30,7 @@ payload.id]]></ee:set-variable>
 		</wsc:consume>
 			<logger level="INFO" doc:name="Logger" doc:id="d965a3fd-473c-43bd-8548-44ec6f1348c8" message="#[payload]" />
 			<error-handler>
-				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="3e780918-b47b-467b-b7b8-75b69e202200" type="WSC:BAD_REQUEST, WSC:BAD_RESPONSE, WSC:CANNOT_DISPATCH, WSC:EMPTY_RESPONSE, WSC:ENCODING, WSC:INVALID_WSDL, WSC:RETRY_EXHAUSTED, EXPRESSION, STREAM_MAXIMUM_SIZE_EXCEEDED">
+				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="3e780918-b47b-467b-b7b8-75b69e202200" type="WSC:BAD_REQUEST, WSC:BAD_RESPONSE, WSC:CANNOT_DISPATCH, WSC:EMPTY_RESPONSE, WSC:ENCODING, WSC:INVALID_WSDL, WSC:RETRY_EXHAUSTED, WSC:SOAP_FAULT, EXPRESSION, STREAM_MAXIMUM_SIZE_EXCEEDED">
 					<ee:transform doc:name="Transform Message" doc:id="00b4e4f9-5807-4397-b46a-ce50c107b49a" >
 						<ee:message >
 							<ee:set-payload ><![CDATA[%dw 2.0
@@ -81,46 +81,17 @@ output application/java
 ---
 error.detailedDescription]]></ee:set-payload>
 						</ee:message>
+						<ee:variables >
+							<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
+output application/java
+---
+400]]></ee:set-variable>
+						</ee:variables>
 					</ee:transform>
 					<logger level="INFO" doc:name="Logger" doc:id="28a6fdb8-a59a-47bf-955e-2044e0e439ad" />
 					<flow-ref doc:name="Flow Reference" doc:id="d2ae38d9-7309-46d6-9c0d-574f3bb56713" name="email_notification_sub_Flow" />
 					<logger level="INFO" doc:name="Logger" doc:id="8598afde-da2d-47b6-a1e1-8c9b0f8079ba" message="#[payload]" />
 				</on-error-propagate>
-				<!-- [STUDIO:"On Error Propagate"]<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="f3af7d69-82c6-41fe-9c90-9a2970db9abc" type="WSC:SOAP_FAULT">
-					<ee:transform doc:name="Transform Message" doc:id="c182b35a-f440-4e5e-967b-3800c93d2e15">
-						<ee:message>
-							<ee:set-payload><![CDATA[%dw 2.0
-output application/java
-&#45;&#45;-
-error.detailedDescription&#93;&#93;></ee:set-payload>
-						</ee:message>
-						<ee:variables >
-							<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
-output application/java
-&#45;&#45;-
-400&#93;&#93;></ee:set-variable>
-							<ee:set-variable variableName="errorResponse" ><![CDATA[%dw 2.0
-output application/java
-&#45;&#45;-
-error.detailedDescription&#93;&#93;></ee:set-variable>
-						</ee:variables>
-					</ee:transform>
-					<logger level="INFO" doc:name="Logger" doc:id="201ad550-be81-4935-9154-e56937ffb4e6" />
-					<flow-ref doc:name="Flow Reference" doc:id="ac03e658-5cec-4a97-a7bd-9c950604526b" name="email_notification_sub_Flow" />
-					<logger level="INFO" doc:name="Logger" doc:id="784f0f24-791d-483a-ba18-196fba246af4" message="#[payload&#93;" />
-					<ee:transform doc:name="Transform Message" doc:id="c359fd16-ee60-40ea-8cb4-91f06ffc4e49">
-						<ee:message>
-							<ee:set-payload><![CDATA[%dw 2.0
-output application/json
-&#45;&#45;-
-
-vars.errorResponse
-
-&#93;&#93;></ee:set-payload>
-						</ee:message>
-					</ee:transform>
-					<logger level="INFO" doc:name="Logger" doc:id="e5d42a39-582e-4590-89ed-03c62fd57c2c" message="#[payload&#93;" />
-				</on-error-propagate> [STUDIO] -->
 			</error-handler>
 		</try>
 		<choice doc:name="Choice" doc:id="450019dd-5233-4f01-94bc-c1b01978de0f">

@@ -4,7 +4,7 @@
 
 	<groupId>com.ntn</groupId>
 	<artifactId>ntn-jde-sync-sapi</artifactId>
-	<version>1.1.0-rc9</version>
+	<version>1.1.0-rc12</version>
 	<packaging>mule-application</packaging>
 
 	<name>ntn-jde-sync-sapi</name>
@@ -40,14 +40,14 @@
 					<classifier>mule-application</classifier>
 				</configuration> -->
 				<configuration>
-			        <sharedLibraries>
-			            <sharedLibrary>
-			                <groupId>com.oracle.database.jdbc</groupId>
-			                <artifactId>ojdbc11</artifactId>
-			            </sharedLibrary>
-			        </sharedLibraries>
-			        <classifier>mule-application</classifier>
-			    </configuration>
+					<sharedLibraries>
+						<sharedLibrary>
+							<groupId>com.oracle.database.jdbc</groupId>
+							<artifactId>ojdbc11</artifactId>
+						</sharedLibrary>
+					</sharedLibraries>
+					<classifier>mule-application</classifier>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.mulesoft.munit.tools</groupId>
@@ -168,9 +168,9 @@
 		    <version>21.9.0.0</version>
 		</dependency> -->
 		<dependency>
-		    <groupId>com.oracle.database.jdbc</groupId>
-		    <artifactId>ojdbc11</artifactId>
-		    <version>23.9.0.25.07</version>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc11</artifactId>
+			<version>23.9.0.25.07</version>
 		</dependency>
 	</dependencies>
 
